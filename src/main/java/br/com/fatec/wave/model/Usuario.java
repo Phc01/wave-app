@@ -23,11 +23,15 @@ public class Usuario implements UserDetails {
 
     private String senha;
 
-    public Usuario(Long id, String nome, String email, String senha) {
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    public Usuario(Long id, String nome, String email, String senha, UserRole role) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.role = role;
     }
 
     public Usuario() {
@@ -35,7 +39,11 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.ADMIN) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        }
     }
 
     @Override
@@ -100,5 +108,13 @@ public class Usuario implements UserDetails {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

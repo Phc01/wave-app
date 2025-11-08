@@ -4,6 +4,7 @@ import br.com.fatec.wave.dto.AtualizarUsuarioDTO;
 import br.com.fatec.wave.dto.CriarUsuarioDTO;
 import br.com.fatec.wave.dto.UsuarioResponseDTO;
 import br.com.fatec.wave.exception.ResourceNotFoundException;
+import br.com.fatec.wave.model.UserRole;
 import br.com.fatec.wave.model.Usuario;
 import br.com.fatec.wave.repository.UsuarioRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -71,6 +72,7 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
         usuario.setNome(criarUsuarioDTO.nome());
         usuario.setEmail(criarUsuarioDTO.email());
         usuario.setSenha(passwordEncoder.encode(criarUsuarioDTO.senha()));
+        usuario.setRole(UserRole.USER);
 
         Usuario usuarioSalvo = repository.save(usuario);
 
