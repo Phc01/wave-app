@@ -10,7 +10,7 @@ COPY src ./src
 
 RUN mvn package -DskipTests
 
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jdk-focal
 
 WORKDIR /app
 
